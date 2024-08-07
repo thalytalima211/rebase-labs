@@ -1,0 +1,22 @@
+services:
+  app:
+    image: ruby
+    container_name: myapp
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - 3000:3000
+    command: bash -c "bundle install && ruby server.rb"
+  db:
+    image: postgres
+    container_name: mydb
+    environment:
+      - POSTGRES_PASSWORD=mypass
+      - POSTGRES_USER=myuser
+      - POSTGRES_DB=mydb
+    volumes:
+      - relabs_data:/var/lib/postgresql/data
+
+volumes:
+  relabs_data:
