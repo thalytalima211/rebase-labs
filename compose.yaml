@@ -7,7 +7,7 @@ services:
     working_dir: /app
     ports:
       - 3000:3000
-    command: bash -c "bundle install && ruby server.rb"
+    command: bash -c "bundle install && ruby create_exams_table.rb && ruby server.rb"
   db:
     image: postgres
     container_name: mydb
