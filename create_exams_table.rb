@@ -22,3 +22,5 @@ conn.exec <<-DATABASE_QUERY
     "resultado tipo exame" VARCHAR(7)
   );
 DATABASE_QUERY
+
+conn.close

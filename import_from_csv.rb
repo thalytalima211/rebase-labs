@@ -10,3 +10,5 @@ rows.each do |row|
   data = row.map { |data| "'#{data.gsub("'", "''")}'" }.join(', ')
   conn.exec("INSERT INTO exams (#{columns_list}) VALUES (#{data});")
 end
+
+conn.close
