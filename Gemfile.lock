@@ -3,6 +3,7 @@ GEM
   specs:
     base64 (0.2.0)
     csv (3.3.0)
+    diff-lcs (1.5.1)
     mustermann (3.0.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.3)
@@ -15,6 +16,19 @@ GEM
       rack (>= 3.0.0, < 4)
     rack-session (2.0.0)
       rack (>= 3.0.0)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.1)
     ruby2_keywords (0.0.5)
     sinatra (4.0.0)
       mustermann (~> 3.0)
@@ -32,6 +46,7 @@ DEPENDENCIES
   csv
   pg
   puma
+  rspec
   sinatra
 
 BUNDLED WITH
