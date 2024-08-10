@@ -4,4 +4,7 @@ gem 'sinatra'
 gem 'csv'
 gem 'puma'
 gem 'pg'
-gem 'rspec'
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+end

@@ -8,17 +8,17 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - db
-    command: bash -c "bundle install && ruby create_exams_table.rb && ruby server.rb"
-  db:
+      - db_dev
+    command: bash -c "bundle install && ruby db/start_database.rb && ruby app/server.rb"
+  db_dev:
     image: postgres
-    container_name: mydb
+    container_name: development_db
     environment:
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_USER=myuser
-      - POSTGRES_DB=mydb
+      - POSTGRES_DB=devdb
     volumes:
-      - relabs_data:/var/lib/postgresql/data
+      - relabs_data_dev:/var/lib/postgresql/data
   test:
     image: ruby
     container_name: myapp_test
@@ -26,8 +26,17 @@ services:
       - .:/app
     working_dir: /app
     depends_on:
-      - db
+      - db_test
     command: bash -c "bundle install && rspec"
-
+  db_test:
+    image: postgres
+    container_name: test_db
+    environment:
+      - POSTGRES_PASSWORD=mypass
+      - POSTGRES_USER=myuser
+      - POSTGRES_DB=testdb
+    volumes:
+      - relabs_data_test:/var/lib/postgresql/data
 volumes:
-  relabs_data:
+  relabs_data_dev:
+  relabs_data_test:
