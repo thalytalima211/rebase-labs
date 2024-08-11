@@ -1,26 +1,29 @@
 require 'rack/test'
 require 'rspec'
 require 'pg'
-require_relative '../../app/app.rb'
-require_relative '../../db/database_config.rb'
-
-ENV['RACK_ENV'] = 'test'
+require 'spec_helper'
+require_relative '../../app/app'
+require_relative '../../db/database_config'
 
 RSpec.describe 'GET /read_database' do
-  before(:all) do
-  end
-
-  after(:all) do
-  end
-
-  include Rack::Test::Methods
-  def app() Sinatra::Application end
-
-  it 'and sees all data' do
+  before(:each) do
     @testdb_conn = PG.connect(host: 'test_db', user: 'myuser', dbname: 'testdb', password: 'mypass')
     allow(PG).to receive(:connect).with(host: 'development_db', user: 'myuser',
                                         dbname: 'devdb', password: 'mypass').and_return(@testdb_conn)
     DatabaseConfig.create_table
+  end
+
+  after(:each) do
+    @testdb_conn.exec 'DROP TABLE IF EXISTS exams'
+    @testdb_conn.close
+  end
+
+  include Rack::Test::Methods
+  def app
+    Sinatra::Application
+  end
+
+  it 'returns all data' do
     @testdb_conn.exec <<~INSERTDATA
       INSERT INTO exams ("nome paciente", "cpf", "cidade paciente", "estado paciente", "token resultado exame")
       VALUES
@@ -53,6 +56,13 @@ RSpec.describe 'GET /read_database' do
     expect(data[2]['cidade paciente']).to eq 'Senador Elói de Souza'
     expect(data[2]['estado paciente']).to eq 'Pernambuco'
     expect(data[2]['token resultado exame']).to eq 'T9O6AI'
-    @testdb_conn.exec "DROP TABLE IF EXISTS exams"
+  end
+
+  it 'returns an empty array' do
+    get '/read_database'
+
+    expect(last_response.status).to eq 200
+    data = JSON.parse last_response.body
+    expect(data.length).to eq 0
   end
 end

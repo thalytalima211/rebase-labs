@@ -4,7 +4,7 @@ require 'csv'
 require 'pg'
 
 get '/tests' do
-  rows = CSV.read("./data.csv", col_sep: ';')
+  rows = CSV.read('./data.csv', col_sep: ';')
 
   columns = rows.shift
 
@@ -20,10 +20,10 @@ get '/read_database' do
   content_type :json
   conn = PG.connect host: 'development_db', user: 'myuser', dbname: 'devdb', password: 'mypass'
 
-  result = conn.exec "SELECT * FROM exams"
+  result = conn.exec 'SELECT * FROM exams'
   result = result.to_a
 
-  conn.close unless ENV['RACK_ENV'] = 'test'
+  conn.close unless ENV['RACK_ENV'] == 'test'
   result.to_json
 end
 

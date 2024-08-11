@@ -1,0 +1,19 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.2
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+  SuggestExtensions: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context', 'feature', 'scenario', 'let', 'it']
+

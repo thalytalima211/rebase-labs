@@ -27,7 +27,7 @@ services:
     working_dir: /app
     depends_on:
       - db_test
-    command: bash -c "bundle install && rspec"
+    command: bash -c "bundle install && rspec && rubocop"
   db_test:
     image: postgres
     container_name: test_db
