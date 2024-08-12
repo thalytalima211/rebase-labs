@@ -18,6 +18,7 @@ require 'pg'
 require 'rack/test'
 require 'capybara/rspec'
 require 'sinatra'
+require 'faraday'
 ENV['RACK_ENV'] = 'test'
 
 module RSpecMixin

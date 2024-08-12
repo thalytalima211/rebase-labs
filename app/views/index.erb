@@ -1,0 +1,21 @@
+<% if @tests.any? %>
+    <% @tests.each do |test| %>
+        <div id="<%= test['token resultado exame'] %>">
+            <h2><%= test['token resultado exame']%></h2>
+            CPF: <%= test['cpf'] %>
+            Nome: <%= test['nome paciente'] %>
+            Email: <%= test['email paciente'] %>
+            Data de Nascimento: <%= test['data nascimento paciente'] %>
+            Endereço: <%= test['endereço/rua paciente'] %>
+            Cidade: <%= test['cidade paciente'] %>
+            Estado: <%= test['estado paciente'] %>
+            CRM: <%= test['crm médico'] %>
+            Estado do CRM: <%= test['crm médico estado'] %>
+            Nome do Médico: <%= test['nome médico'] %>
+            Email do Médico: <%= test['email médico'] %>
+            Data de Realização do Exame: <%= test['data exame'] %>
+        </div>
+    <% end %>
+<% else %>
+    No momento, não há exames em nossa base de dados.
+<% end %>

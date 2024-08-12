@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../../app/app'
-require_relative '../../db/database_config'
+require_relative '../../../app/app'
+require_relative '../../../db/database_config'
 
 RSpec.describe 'GET /read_database' do
   before(:each) do

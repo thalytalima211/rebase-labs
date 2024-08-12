@@ -16,7 +16,7 @@ RSpec.describe 'Import data from csv' do
   end
 
   it 'sucessfully' do
-    csv_rows = CSV.read('/app/spec/support/data_to_import.csv', col_sep: ';')
+    csv_rows = CSV.read('/app/spec/support/csv/data_to_import.csv', col_sep: ';')
     allow(CSV).to receive(:read).with('/app/public/data.csv', col_sep: ';').and_return(csv_rows)
 
     DatabaseConfig.import_from_csv

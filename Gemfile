@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'csv'
+gem 'faraday'
 gem 'pg'
 gem 'puma'
 gem 'rubocop'

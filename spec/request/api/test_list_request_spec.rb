@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../../app/app'
-require_relative '../../db/database_config'
+require_relative '../../../app/app'
+require_relative '../../../db/database_config'
 
 RSpec.describe 'GET /tests' do
   before(:each) do
@@ -16,11 +16,11 @@ RSpec.describe 'GET /tests' do
   end
 
   it 'and returns all tests data' do
-    csv_rows = CSV.read('/app/spec/support/tests_data.csv', col_sep: ';')
+    csv_rows = CSV.read('/app/spec/support/csv/tests_data.csv', col_sep: ';')
     allow(CSV).to receive(:read).with('/app/public/data.csv', col_sep: ';').and_return(csv_rows)
 
     DatabaseConfig.import_from_csv
-    get '/tests'
+    get '/api/tests'
 
     expect(last_response.status).to eq 200
     data = JSON.parse last_response.body
