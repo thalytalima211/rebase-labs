@@ -14,11 +14,12 @@ class DatabaseConfig
     conn = PG.connect host: 'development_db', user: 'myuser', dbname: 'devdb', password: 'mypass'
 
     rows = CSV.read('/app/public/data.csv', col_sep: ';')
-    columns_list = rows.shift.map { |col| "\"#{col}\"" }.join(', ')
+    rows.shift
+    columns = columns_list
 
     rows.each do |row|
       data_values = row.map { |data| "'#{data.gsub("'", "''")}'" }.join(', ')
-      conn.exec("INSERT INTO tests (#{columns_list}) VALUES (#{data_values});")
+      conn.exec("INSERT INTO tests (#{columns}) VALUES (#{data_values});")
     end
 
     conn.close unless ENV['RACK_ENV'] == 'test'
@@ -27,14 +28,20 @@ class DatabaseConfig
   def self.create_table_query
     <<-DATABASE_QUERY
     CREATE TABLE IF NOT EXISTS tests(
-      cpf VARCHAR(14), "nome paciente" VARCHAR(100), "email paciente" VARCHAR(100),
-      "data nascimento paciente" DATE, "endereço/rua paciente" VARCHAR(100), "cidade paciente" VARCHAR(50),
-      "estado paciente" VARCHAR(30), "crm médico" VARCHAR(30), "crm médico estado" VARCHAR(30),
-      "nome médico" VARCHAR(70), "email médico" VARCHAR(50), "token resultado exame" VARCHAR(40),
-      "data exame" DATE, "tipo exame" VARCHAR(40), "limites tipo exame" VARCHAR(15), "resultado tipo exame" VARCHAR(7)
+      cpf VARCHAR(14), name VARCHAR(100), email VARCHAR(100), birthday DATE, address VARCHAR(100), city VARCHAR(50),
+      state VARCHAR(30), doctor_crm VARCHAR(30), doctor_crm_state VARCHAR(30), doctor_name VARCHAR(70),
+      doctor_email VARCHAR(50), result_token VARCHAR(40), result_date DATE, test_type VARCHAR(40),
+      test_type_limits VARCHAR(15), test_type_result VARCHAR(7)
     );
     DATABASE_QUERY
   end
 
-  private_class_method :create_table_query
+  def self.columns_list
+    <<~COLUMNS
+      cpf, name, email, birthday, address, city, state, doctor_crm, doctor_crm_state, doctor_name, doctor_email,
+      result_token, result_date, test_type, test_type_limits, test_type_result
+    COLUMNS
+  end
+
+  private_class_method :create_table_query, :columns_list
 end

@@ -24,13 +24,13 @@ RSpec.describe 'Import data from csv' do
 
     expect(result.ntuples).to eq 2
     expect(result[0]['cpf']).to eq '048.973.170-88'
-    expect(result[0]['nome paciente']).to eq 'Emilly Batista Neto'
-    expect(result[0]['cidade paciente']).to eq 'Ituverava'
-    expect(result[0]['token resultado exame']).to eq 'IQCZ17'
+    expect(result[0]['name']).to eq 'Emilly Batista Neto'
+    expect(result[0]['city']).to eq 'Ituverava'
+    expect(result[0]['result_token']).to eq 'IQCZ17'
 
     expect(result[1]['cpf']).to eq '048.108.026-04'
-    expect(result[1]['nome paciente']).to eq 'Juliana dos Reis Filho'
-    expect(result[1]['cidade paciente']).to eq 'Lagoa da Canoa'
-    expect(result[1]['token resultado exame']).to eq '0W9I67'
+    expect(result[1]['name']).to eq 'Juliana dos Reis Filho'
+    expect(result[1]['city']).to eq 'Lagoa da Canoa'
+    expect(result[1]['result_token']).to eq '0W9I67'
   end
 end
