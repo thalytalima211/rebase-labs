@@ -1,4 +1,3 @@
-require 'rspec'
 require 'csv'
 require 'spec_helper'
 require_relative '../../db/database_config'

@@ -13,10 +13,26 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-
+require 'rspec'
+require 'pg'
+require 'rack/test'
+require 'capybara/rspec'
+require 'sinatra'
 ENV['RACK_ENV'] = 'test'
 
+module RSpecMixin
+  include Rack::Test::Methods
+
+  def app
+    Sinatra::Application
+  end
+end
+
 RSpec.configure do |config|
+  config.include RSpecMixin
+  config.include Capybara::DSL
+
+  Capybara.app = Sinatra::Application
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

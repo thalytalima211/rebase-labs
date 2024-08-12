@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'rack/test'
-require 'rspec'
-require 'pg'
 require_relative '../../app/app'
 require_relative '../../db/database_config'
 
@@ -16,11 +13,6 @@ RSpec.describe 'GET /tests' do
   after(:each) do
     @testdb_conn.exec 'DROP TABLE IF EXISTS tests'
     @testdb_conn.close
-  end
-
-  include Rack::Test::Methods
-  def app
-    Sinatra::Application
   end
 
   it 'and returns all tests data' do
