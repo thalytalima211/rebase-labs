@@ -18,7 +18,7 @@ class DatabaseConfig
 
     rows.each do |row|
       data_values = row.map { |data| "'#{data.gsub("'", "''")}'" }.join(', ')
-      conn.exec("INSERT INTO exams (#{columns_list}) VALUES (#{data_values});")
+      conn.exec("INSERT INTO tests (#{columns_list}) VALUES (#{data_values});")
     end
 
     conn.close unless ENV['RACK_ENV'] == 'test'
@@ -26,7 +26,7 @@ class DatabaseConfig
 
   def self.create_table_query
     <<-DATABASE_QUERY
-    CREATE TABLE IF NOT EXISTS exams(
+    CREATE TABLE IF NOT EXISTS tests(
       cpf VARCHAR(14), "nome paciente" VARCHAR(100), "email paciente" VARCHAR(100),
       "data nascimento paciente" DATE, "endereço/rua paciente" VARCHAR(100), "cidade paciente" VARCHAR(50),
       "estado paciente" VARCHAR(30), "crm médico" VARCHAR(30), "crm médico estado" VARCHAR(30),

@@ -12,7 +12,7 @@ RSpec.describe 'Import data from csv' do
   end
 
   after(:each) do
-    @testdb_conn.exec 'DROP TABLE IF EXISTS exams'
+    @testdb_conn.exec 'DROP TABLE IF EXISTS tests'
     @testdb_conn.close
   end
 
@@ -21,7 +21,7 @@ RSpec.describe 'Import data from csv' do
     allow(CSV).to receive(:read).with('/app/public/data.csv', col_sep: ';').and_return(csv_rows)
 
     DatabaseConfig.import_from_csv
-    result = @testdb_conn.exec 'SELECT * FROM exams'
+    result = @testdb_conn.exec 'SELECT * FROM tests'
 
     expect(result.ntuples).to eq 2
     expect(result[0]['cpf']).to eq '048.973.170-88'

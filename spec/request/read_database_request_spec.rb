@@ -1,7 +1,7 @@
+require 'spec_helper'
 require 'rack/test'
 require 'rspec'
 require 'pg'
-require 'spec_helper'
 require_relative '../../app/app'
 require_relative '../../db/database_config'
 
@@ -14,7 +14,7 @@ RSpec.describe 'GET /read_database' do
   end
 
   after(:each) do
-    @testdb_conn.exec 'DROP TABLE IF EXISTS exams'
+    @testdb_conn.exec 'DROP TABLE IF EXISTS tests'
     @testdb_conn.close
   end
 
@@ -25,7 +25,7 @@ RSpec.describe 'GET /read_database' do
 
   it 'returns all data' do
     @testdb_conn.exec <<~INSERTDATA
-      INSERT INTO exams ("nome paciente", "cpf", "cidade paciente", "estado paciente", "token resultado exame")
+      INSERT INTO tests ("nome paciente", "cpf", "cidade paciente", "estado paciente", "token resultado exame")
       VALUES
       ('Emilly Batista Neto', '048.973.170-88', 'Ituverava', 'Alagoas', 'IQCZ17'),
       ('Juliana dos Reis Filho', '048.108.026-04', 'Lagoa da Canoa', 'Paraíba', '0W9I67'),
