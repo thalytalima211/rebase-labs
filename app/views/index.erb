@@ -1,20 +1,22 @@
 <% if @tests.any? %>
     <% @tests.each do |test| %>
-        <div id="<%= test['token resultado exame'] %>">
-            <h2><%= test['token resultado exame']%></h2>
-            CPF: <%= test['cpf'] %>
-            Nome: <%= test['nome paciente'] %>
-            Email: <%= test['email paciente'] %>
-            Data de Nascimento: <%= test['data nascimento paciente'] %>
-            Endereço: <%= test['endereço/rua paciente'] %>
-            Cidade: <%= test['cidade paciente'] %>
-            Estado: <%= test['estado paciente'] %>
-            CRM: <%= test['crm médico'] %>
-            Estado do CRM: <%= test['crm médico estado'] %>
-            Nome do Médico: <%= test['nome médico'] %>
-            Email do Médico: <%= test['email médico'] %>
-            Data de Realização do Exame: <%= test['data exame'] %>
-        </div>
+        <a href="/<%= test['result_token'] %>" id="<%= test['result_token'] %>">
+            <div 
+                <h2><%= test['result_token']%></h2>
+                Data de Realização do Exame: <%= test['result_date'] %>
+                CPF: <%= test['cpf'] %>
+                Nome: <%= test['name'] %>
+                Email: <%= test['email'] %>
+                Data de Nascimento: <%= test['birthday'] %>
+                Endereço: <%= test['address'] %>
+                Cidade: <%= test['city'] %>
+                Estado: <%= test['state'] %>
+                CRM: <%= test['doctor']['crm'] %>
+                Estado do CRM: <%= test['doctor']['crm_state'] %>
+                Nome do Médico: <%= test['doctor']['name'] %>
+                Email do Médico: <%= test['doctor']['email'] %>
+            </div>
+        </a>
     <% end %>
 <% else %>
     No momento, não há exames em nossa base de dados.

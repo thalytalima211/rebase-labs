@@ -1,0 +1,24 @@
+<div>
+    <h2><%= @test['result_token']%></h2>
+    Data de Realização do Exame: <%= @test['result_date'] %>
+    CPF: <%= @test['cpf'] %>
+    Nome: <%= @test['name'] %>
+    Email: <%= @test['email'] %>
+    Data de Nascimento: <%= @test['birthday'] %>
+    Endereço: <%= @test['address'] %>
+    Cidade: <%= @test['city'] %>
+    Estado: <%= @test['state'] %>
+    CRM: <%= @test['doctor']['crm'] %>
+    Estado do CRM: <%= @test['doctor']['crm_state'] %>
+    Nome do Médico: <%= @test['doctor']['name'] %>
+    Email do Médico: <%= @test['doctor']['email'] %>
+</div>
+<section>
+    <% @test['tests'].each do |test_item| %>
+        <div>
+            Tipo de Exame: <%= test_item['type'] %>
+            Limites Recomendados: <%= test_item['limits'] %>
+            Resultado: <%= test_item['result'] %>
+        </div>
+    <% end %>
+</section>

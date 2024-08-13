@@ -43,7 +43,6 @@ get '/api/tests' do
     conn.close unless ENV['RACK_ENV'] == 'test'
     []
   end
-
 end
 
 get '/api/test/:token' do
@@ -81,6 +80,16 @@ get '/' do
   if response.status == 200
     @tests = JSON.parse(response.body)
     erb :index
+  else
+    erb 'Não foi possível conectar-se com a base de dados'
+  end
+end
+
+get '/:token' do
+  response = Faraday.get("http://localhost:3000/api/test/#{params[:token]}")
+  if response.status == 200
+    @test = JSON.parse(response.body)
+    erb :show
   else
     erb 'Não foi possível conectar-se com a base de dados'
   end
