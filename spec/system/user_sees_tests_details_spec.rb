@@ -13,7 +13,6 @@ RSpec.describe 'User sees test\'s details' do
     allow(Faraday).to receive(:get).with('http://localhost:3000/api/test/00S0MD').and_return(fake_response)
     within('#00S0MD') { click_on 'Ver resultados' }
 
-    expect(current_path).to eq '/00S0MD'
     expect(page).to have_content '00S0MD'
     expect(page).to have_content 'CPF: 099.204.552-53'
     expect(page).to have_content 'Nome: Ladislau Duarte'
@@ -45,8 +44,53 @@ RSpec.describe 'User sees test\'s details' do
   end
 
   it 'and cannot acess an invalid token' do
-    visit '/ABCDE'
+    visit '/?token=ABCDE'
 
-    expect(page).to have_content 'Não foi possível conectar-se com a base de dados'
+    expect(page).to have_content 'Não foi possível encontrar este exame'
+  end
+
+  context 'by searching' do
+    it 'sucessfully' do
+      json_data_tests = File.read(File.join(Dir.pwd, 'spec/support/json/tests.json'))
+      fake_response_tests = double('faraday_response', status: 200, body: json_data_tests)
+      allow(Faraday).to receive(:get).with('http://localhost:3000/api/tests').and_return(fake_response_tests)
+
+      json_data_test = File.read(File.join(Dir.pwd, 'spec/support/json/test.json'))
+      fake_response_test = double('faraday_response', status: 200, body: json_data_test)
+      allow(Faraday).to receive(:get).with('http://localhost:3000/api/test/00S0MD').and_return(fake_response_test)
+
+      visit '/'
+      fill_in 'Pesquisar Exame', with: '00S0MD'
+      click_on 'Pesquisar'
+
+      expect(page).to have_content '00S0MD'
+      expect(page).to have_content 'CPF: 099.204.552-53'
+      expect(page).to have_content 'Nome: Ladislau Duarte'
+      expect(page).to have_content 'Email: lisha@rosenbaum.org'
+      within('section div:nth-child(1)') do
+        expect(page).to have_content 'Tipo de Exame: hemácias'
+        expect(page).to have_content 'Limites Recomendados: 45-52'
+        expect(page).to have_content 'Resultado: 97'
+      end
+      within('section div:nth-child(2)') do
+        expect(page).to have_content 'Tipo de Exame: leucócitos'
+        expect(page).to have_content 'Limites Recomendados: 9-61'
+        expect(page).to have_content 'Resultado: 89'
+      end
+    end
+
+    it 'and cannot find token' do
+      fake_response_tests = double('faraday_response', status: 200, body: '[]')
+      allow(Faraday).to receive(:get).with('http://localhost:3000/api/tests').and_return(fake_response_tests)
+
+      fake_response_test = double('faraday_response', status: 404)
+      allow(Faraday).to receive(:get).with('http://localhost:3000/api/test/ABCDE').and_return(fake_response_test)
+
+      visit '/'
+      fill_in 'Pesquisar Exame', with: 'ABCDE'
+      click_on 'Pesquisar'
+
+      expect(page).to have_content 'Não foi possível encontrar este exame'
+    end
   end
 end
