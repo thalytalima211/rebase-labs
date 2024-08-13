@@ -2,21 +2,41 @@
     <div class="row row-cols-2">
     <% @tests.each do |test| %>
             <div class="col">
-                <a href="/<%= test['result_token'] %>" class="card text-center link-underline link-underline-opacity-0" id="<%= test['result_token'] %>">
-                    <h4 class="card-title text-light text-bg-info py-2 fw-bold"><%= test['result_token']%></h4>
-                    Data de Realização do Exame: <%= test['result_date'] %>
-                    CPF: <%= test['cpf'] %>
-                    Nome: <%= test['name'] %>
-                    Email: <%= test['email'] %>
-                    Data de Nascimento: <%= test['birthday'] %>
-                    Endereço: <%= test['address'] %>
-                    Cidade: <%= test['city'] %>
-                    Estado: <%= test['state'] %>
-                    CRM: <%= test['doctor']['crm'] %>
-                    Estado do CRM: <%= test['doctor']['crm_state'] %>
-                    Nome do Médico: <%= test['doctor']['name'] %>
-                    Email do Médico: <%= test['doctor']['email'] %>
-                </a>
+                <div class="card mb-2" id="<%= test['result_token'] %>">
+                    <div class="card-title text-center text-light text-bg-info py-2">
+                        <h4 class="fw-bold mb-0"><%= test['result_token']%></h4>
+                        Data de Realização do Exame: <%= test['result_date'] %>
+                    </div>
+                    <div class="card-body py-1">
+                        <h5 class="text-center">Dados do paciente</h5>
+                        <div class="row row-cols-2">
+                            <span class="col"><b class="details-header">CPF:</b> <%= test['cpf'] %></span>
+                            <span class="col"><b class="details-header">Nome:</b> <%= test['name'] %></span>
+                            <span class="col"><b class="details-header">Email:</b> <%= test['email'] %></span>
+                            <span class="col"><b class="details-header">Data de Nascimento:</b> <%= test['birthday'] %></span>
+                            <span class="col"><b class="details-header">Endereço:</b> <%= test['address'] %></span>
+                            <span class="col"><b class="details-header">Cidade:</b> <%= test['city'] %></span>
+                            <span class="col"><b class="details-header">Estado:</b> <%= test['state'] %></span>
+                        </div>
+                        <h5 class="text-center border-top pt-2 mt-2">Médico responsável</h5>
+                        <div class="row row-cols-2">
+                            <span class="col"><b class="details-header">CRM:</b> <%= test['doctor']['crm'] %></span>
+                            <span class="col"><b class="details-header">Estado do CRM:</b> <%= test['doctor']['crm_state'] %></span>
+                            <span class="col"><b class="details-header">Nome do Médico:</b> <%= test['doctor']['name'] %></span>
+                            <span class="col"><b class="details-header">Email do Médico:</b> <%= test['doctor']['email'] %></span>
+                        </div>
+                        <div class="text-center">
+                            <a href="/<%= test['result_token'] %>" class="btn btn-success mb-2 mt-3 d-inline-flex justify-content-center align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-pulse me-1" viewBox="0 0 16 16">
+                                    <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
+                                    <path d="M9.979 5.356a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.926-.08L4.69 10H4.5a.5.5 0 0 0 0 1H5a.5.5 0 0 0 .447-.276l.936-1.873 1.138 3.793a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h.5a.5.5 0 0 0 0-1h-.128z"/>
+                                </svg>
+                                Ver resultados
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
     <% end %>
     </div>

@@ -11,7 +11,7 @@ RSpec.describe 'User sees test\'s details' do
     json_data = File.read(File.join(Dir.pwd, 'spec/support/json/test.json'))
     fake_response = double('faraday_response', status: 200, body: json_data)
     allow(Faraday).to receive(:get).with('http://localhost:3000/api/test/00S0MD').and_return(fake_response)
-    find('#00S0MD').click
+    within('#00S0MD') { click_on 'Ver resultados' }
 
     expect(current_path).to eq '/00S0MD'
     expect(page).to have_content '00S0MD'
