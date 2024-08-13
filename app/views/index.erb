@@ -1,23 +1,25 @@
 <% if @tests.any? %>
+    <div class="row row-cols-2">
     <% @tests.each do |test| %>
-        <a href="/<%= test['result_token'] %>" id="<%= test['result_token'] %>">
-            <div 
-                <h2><%= test['result_token']%></h2>
-                Data de Realização do Exame: <%= test['result_date'] %>
-                CPF: <%= test['cpf'] %>
-                Nome: <%= test['name'] %>
-                Email: <%= test['email'] %>
-                Data de Nascimento: <%= test['birthday'] %>
-                Endereço: <%= test['address'] %>
-                Cidade: <%= test['city'] %>
-                Estado: <%= test['state'] %>
-                CRM: <%= test['doctor']['crm'] %>
-                Estado do CRM: <%= test['doctor']['crm_state'] %>
-                Nome do Médico: <%= test['doctor']['name'] %>
-                Email do Médico: <%= test['doctor']['email'] %>
+            <div class="col">
+                <a href="/<%= test['result_token'] %>" class="card text-center link-underline link-underline-opacity-0" id="<%= test['result_token'] %>">
+                    <h4 class="card-title text-light text-bg-info py-2 fw-bold"><%= test['result_token']%></h4>
+                    Data de Realização do Exame: <%= test['result_date'] %>
+                    CPF: <%= test['cpf'] %>
+                    Nome: <%= test['name'] %>
+                    Email: <%= test['email'] %>
+                    Data de Nascimento: <%= test['birthday'] %>
+                    Endereço: <%= test['address'] %>
+                    Cidade: <%= test['city'] %>
+                    Estado: <%= test['state'] %>
+                    CRM: <%= test['doctor']['crm'] %>
+                    Estado do CRM: <%= test['doctor']['crm_state'] %>
+                    Nome do Médico: <%= test['doctor']['name'] %>
+                    Email do Médico: <%= test['doctor']['email'] %>
+                </a>
             </div>
-        </a>
     <% end %>
+    </div>
 <% else %>
     No momento, não há exames em nossa base de dados.
 <% end %>

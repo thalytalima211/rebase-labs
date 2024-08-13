@@ -3,6 +3,8 @@ require 'rack/handler/puma'
 require 'csv'
 require 'pg'
 require 'faraday'
+
+set :public_folder, 'public'
 set :views, File.expand_path('../app/views', __dir__)
 
 get '/read_database' do
