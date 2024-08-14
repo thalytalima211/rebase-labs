@@ -78,21 +78,25 @@ get '/api/test/:token' do
 end
 
 get '/' do
-  if params['token']
-    response = Faraday.get("http://localhost:3000/api/test/#{params['token']}")
-    if response.status == 200
-      @test = JSON.parse(response.body)
-      erb :show
-    else
-      erb '<h5>Não foi possível encontrar este exame...</h5>'
-    end
+  return redirect to "/#{params['token']}" if params['token']
+
+  response = Faraday.get('http://localhost:3000/api/tests')
+  if response.status == 200
+    @tests = JSON.parse(response.body)
+    erb :index
   else
-    response = Faraday.get('http://localhost:3000/api/tests')
-    if response.status == 200
-      @tests = JSON.parse(response.body)
-      erb :index
-    else
-      erb 'Não foi possível conectar-se com a base de dados'
-    end
+    erb '<h5>Não foi possível conectar-se com a base de dados</h5>'
+  end
+end
+
+get '/:test_token' do
+  return redirect to "/#{params['token']}" if params['token']
+
+  response = Faraday.get("http://localhost:3000/api/test/#{params[:test_token]}")
+  if response.status == 200
+    @test = JSON.parse(response.body)
+    erb :show
+  else
+    erb '<h5>Não foi possível encontrar este exame...</h5>'
   end
 end

@@ -1,24 +1,61 @@
 <div>
-    <h2><%= @test['result_token']%></h2>
-    Data de Realização do Exame: <%= @test['result_date'] %>
-    CPF: <%= @test['cpf'] %>
-    Nome: <%= @test['name'] %>
-    Email: <%= @test['email'] %>
-    Data de Nascimento: <%= @test['birthday'] %>
-    Endereço: <%= @test['address'] %>
-    Cidade: <%= @test['city'] %>
-    Estado: <%= @test['state'] %>
-    CRM: <%= @test['doctor']['crm'] %>
-    Estado do CRM: <%= @test['doctor']['crm_state'] %>
-    Nome do Médico: <%= @test['doctor']['name'] %>
-    Email do Médico: <%= @test['doctor']['email'] %>
-</div>
-<section>
-    <% @test['tests'].each do |test_item| %>
-        <div>
-            Tipo de Exame: <%= test_item['type'] %>
-            Limites Recomendados: <%= test_item['limits'] %>
-            Resultado: <%= test_item['result'] %>
+    <div class="text-center border-bottom pb-3 mb-3">
+        <h1>Exame <%= @test['result_token']%></h1>
+        <span class="text-secondary">Data de Realização do Exame: <%= @test['result_date'] %></span>
+    </div>
+    <div class="row justify-content-evenly">
+        <div class="col-5">
+            <h2 class="text-center text-secondary">Dados do paciente</h2>
+            <div class="row row-cols-2">
+                <div class="col">
+                    <span class="col"><b class="details-header">CPF:</b> <%= @test['cpf'] %></span><br>
+                    <span class="col"><b class="details-header">Nome:</b> <%= @test['name'] %></span><br>
+                    <span class="col"><b class="details-header">Email:</b> <%= @test['email'] %></span><br>
+                    <span class="col"><b class="details-header">Data de Nascimento:</b> <%= @test['birthday'] %></span>
+                </div>
+                <div class="col">
+                    <span class="col"><b class="details-header">Endereço:</b> <%= @test['address'] %></span><br>
+                    <span class="col"><b class="details-header">Cidade:</b> <%= @test['city'] %></span><br>
+                    <span class="col"><b class="details-header">Estado:</b> <%= @test['state'] %></span>
+                </div>
+            </div>
         </div>
-    <% end %>
+        <div class="col-5">
+            <h2 class="text-center text-secondary">Médico responsável</h2>
+            <div class="row">
+                <div class="col-5">
+                    <span class="col"><b class="details-header">CRM:</b> <%= @test['doctor']['crm'] %></span><br>
+                    <span class="col"><b class="details-header">Estado do CRM:</b> <%= @test['doctor']['crm_state'] %></span>
+                </div>
+                <div class="col-7">
+                    <span class="col"><b class="details-header">Nome do Médico:</b> <%= @test['doctor']['name'] %></span><br>
+                    <span class="col"><b class="details-header">Email do Médico:</b> <%= @test['doctor']['email'] %></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="border-top mt-3 pt-3 px-3">
+    <div class="table-responsive px-5">
+    <h2 class="text-center text-secondary mb-3">Resultados</h2>
+    <table class="table table-hover table-sm align-middle ">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" class="col-2">Tipo de Exame</th>
+          <th scope="col" class="col-2">Limites Recomendados</th>
+          <th scope="col" class="col-2">Resultado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @test['tests'].each do |test_item| %>
+            <tr>
+                <td><%= test_item['type'] %></td>
+                <td><%= test_item['limits'] %></td>
+                <td><%= test_item['result'] %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+    
 </section>
