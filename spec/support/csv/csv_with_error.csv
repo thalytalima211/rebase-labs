@@ -1,3 +1,3 @@
-cpf;nome paciente;email paciente;data nascimento paciente;endereço/rua paciente;cidade paciente;estado paciente;crm médico;crm médico estado;nome médico;email médico;token resultado exame;data exame;tipo exame;limites tipo exame;resultado tipo exame
+cpf,pacient_name,email,birthday,address,city,state,doctor_crm,doctor_crm_state,doctor_name,doctor_email,result_token,result_date,test_type,test_type_limits,test_type_result
 048.973.170-88777;Emilly Batista Neto;gerald.crona@ebert-quigley.com;2001-03-11;165 Rua Rafaela;Ituverava;Alagoas;B000BJ20J4;PI;Maria Luiza Pires;denna@wisozk.biz;IQCZ17;2021-08-05;hemácias;45-52;97
 048.108.026-04;Juliana dos Reis Filho;mariana_crist@kutch-torp.com;1995-07-03;527 Rodovia Júlio;Lagoa da Canoa;Paraíba;B0002IQM66;SC;Maria Helena Ramalho;rayford@kemmer-kunze.info;0W9I67;2021-07-09;tgo;50-84;32

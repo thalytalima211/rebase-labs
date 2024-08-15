@@ -3,6 +3,8 @@ require 'rack/handler/puma'
 require 'csv'
 require 'pg'
 require 'faraday'
+require_relative 'jobs/import_csv_job'
+require_relative '../db/database_config'
 
 set :public_folder, 'public'
 set :views, File.expand_path('../app/views', __dir__)
@@ -74,6 +76,24 @@ get '/api/test/:token' do
   else
     conn.close unless ENV['RACK_ENV'] == 'test'
     status 404
+  end
+end
+
+post '/api/import_csv' do
+  if params[:file][:type] != 'text/csv'
+    status 412
+    return erb 'Formato inválido! Por favor, utilize o modelo fornecido'
+  end
+
+  file = params[:file][:tempfile]
+
+  csv_rows = CSV.read(file, col_sep: ',')
+  header = csv_rows.shift.join(',')
+  if header == DatabaseConfig.columns_list
+    ImportCSVJob.perform_async(csv_rows)
+  else
+    status 412
+    erb 'O arquivo não possui o cabeçalho esperado. Por favor, utilize o modelo de arquivo fornecido.'
   end
 end
 

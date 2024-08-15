@@ -37,11 +37,11 @@ class DatabaseConfig
   end
 
   def self.columns_list
-    <<~COLUMNS
-      cpf, name, email, birthday, address, city, state, doctor_crm, doctor_crm_state, doctor_name, doctor_email,
-      result_token, result_date, test_type, test_type_limits, test_type_result
+    <<~COLUMNS.gsub("\n", '')
+      cpf,name,email,birthday,address,city,state,doctor_crm,doctor_crm_state,doctor_name,doctor_email,
+      result_token,result_date,test_type,test_type_limits,test_type_result
     COLUMNS
   end
 
-  private_class_method :create_table_query, :columns_list
+  private_class_method :create_table_query
 end
