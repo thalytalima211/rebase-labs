@@ -41,7 +41,7 @@ RSpec.describe 'POST /api/import_csv' do
 
     post '/api/import_csv', file: txt_file
 
-    expect(last_response.status).to eq 412
+    expect(last_response.status).to eq 415
     expect(ImportCSVJob.jobs.size).to eq 0
   end
 end
