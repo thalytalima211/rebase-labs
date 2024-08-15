@@ -5,6 +5,7 @@ gem 'faraday'
 gem 'pg'
 gem 'puma'
 gem 'rubocop'
+gem 'sidekiq'
 gem 'sinatra'
 group :test do
   gem 'capybara'

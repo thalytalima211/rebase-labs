@@ -26,20 +26,20 @@ RSpec.describe 'User sees test\'s details' do
     expect(page).to have_content 'Nome do Médico: Ana Sophia Aparício Neto'
     expect(page).to have_content 'Email do Médico: corene.hane@pagac.io'
     expect(page).to have_content 'Data de Realização do Exame: 2022-03-03'
-    within('section div:nth-child(1)') do
-      expect(page).to have_content 'Tipo de Exame: hemácias'
-      expect(page).to have_content 'Limites Recomendados: 45-52'
-      expect(page).to have_content 'Resultado: 97'
+    within('tbody tr:nth-child(1)') do
+      expect(page).to have_content 'hemácias'
+      expect(page).to have_content '45-52'
+      expect(page).to have_content '97'
     end
-    within('section div:nth-child(2)') do
-      expect(page).to have_content 'Tipo de Exame: leucócitos'
-      expect(page).to have_content 'Limites Recomendados: 9-61'
-      expect(page).to have_content 'Resultado: 89'
+    within('tbody tr:nth-child(2)') do
+      expect(page).to have_content 'leucócitos'
+      expect(page).to have_content '9-61'
+      expect(page).to have_content '89'
     end
-    within('section div:nth-child(3)') do
-      expect(page).to have_content 'Tipo de Exame: plaquetas'
-      expect(page).to have_content 'Limites Recomendados: 11-93'
-      expect(page).to have_content 'Resultado: 97'
+    within('tbody tr:nth-child(3)') do
+      expect(page).to have_content 'plaquetas'
+      expect(page).to have_content '11-93'
+      expect(page).to have_content '97'
     end
   end
 
@@ -67,15 +67,15 @@ RSpec.describe 'User sees test\'s details' do
       expect(page).to have_content 'CPF: 099.204.552-53'
       expect(page).to have_content 'Nome: Ladislau Duarte'
       expect(page).to have_content 'Email: lisha@rosenbaum.org'
-      within('section div:nth-child(1)') do
-        expect(page).to have_content 'Tipo de Exame: hemácias'
-        expect(page).to have_content 'Limites Recomendados: 45-52'
-        expect(page).to have_content 'Resultado: 97'
+      within('tbody tr:nth-child(1)') do
+        expect(page).to have_content 'hemácias'
+        expect(page).to have_content '45-52'
+        expect(page).to have_content '97'
       end
-      within('section div:nth-child(2)') do
-        expect(page).to have_content 'Tipo de Exame: leucócitos'
-        expect(page).to have_content 'Limites Recomendados: 9-61'
-        expect(page).to have_content 'Resultado: 89'
+      within('tbody tr:nth-child(2)') do
+        expect(page).to have_content 'leucócitos'
+        expect(page).to have_content '9-61'
+        expect(page).to have_content '89'
       end
     end
 
