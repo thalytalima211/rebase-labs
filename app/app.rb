@@ -81,28 +81,20 @@ get '/api/test/:token' do
 end
 
 post '/api/import_csv' do
-  return status 415 unless params[:file] && params[:file][:type] == 'text/csv'
+  unless params[:file] && params[:file][:type] == 'text/csv'
+    status 415
+    return erb 'Formato inválido! Por favor, utilize o modelo fornecido'
+  end
 
   file = params[:file][:tempfile]
 
   csv_rows = CSV.read(file, col_sep: ',')
   header = csv_rows.shift.join(',')
-
-  return status 412 unless header == DatabaseConfig.columns_list
-
-  ImportCSVJob.perform_async(csv_rows)
-end
-
-post '/import_csv' do
-  return erb 'Nenhum arquivo informado, tente novamente' unless params[:file]
-
-  response = Faraday.new(url: 'http://localhost:3000').post('/api/import_csv', params[:file])
-  case response.status
-  when 200
+  if header == DatabaseConfig.columns_list
+    ImportCSVJob.perform_async(csv_rows)
     erb 'Arquivo recebido! Aguarde alguns instantes para que os dados sejam processados.'
-  when 415
-    erb 'Formato inválido! Por favor, utilize o modelo fornecido'
-  when 412
+  else
+    status 412
     erb 'O arquivo não possui o cabeçalho esperado. Utilize o modelo de arquivo fornecido.'
   end
 end
@@ -115,7 +107,7 @@ get '/' do
     @tests = JSON.parse(response.body)
     erb :index
   elsif response.status == 404
-    'No momento, não há exames em nossa base de dados.'
+    erb 'No momento, não há exames em nossa base de dados.'
   else
     erb '<h5>Não foi possível conectar-se com a base de dados</h5>'
   end

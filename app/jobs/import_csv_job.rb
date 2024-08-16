@@ -1,4 +1,5 @@
 require 'sidekiq'
+require 'pg'
 
 class ImportCSVJob
   include Sidekiq::Job
