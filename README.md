@@ -47,6 +47,18 @@ Para executar somente o container de testes da aplicação, execute o comando ab
 docker compose up test
 ```
 
+## Como visualizar o dashboard dos Jobs
+Para visualizar o painel de processos do Sidekiq, enquanto a aplicação principal está funcionando, rode em outro terminal os seguintes comandos:
+ ```
+ docker exec -it myapp bash
+ bundle exec puma sidekiq_web.ru
+ ```
+
+ O painel deve estar disponivel em:
+ ```
+ http://localhost:9292/
+ ```
+
 ## Casos de teste
 ![](https://github.com/user-attachments/assets/829591a5-3717-49b2-bd68-a4a184631654)
 Tela inicial que exibe a listagem de todos os tokens de exames.
