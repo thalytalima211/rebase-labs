@@ -45,7 +45,8 @@ get '/api/tests' do
     formatted_results.to_json
   else
     conn.close unless ENV['RACK_ENV'] == 'test'
-    []
+    status 404
+    [].to_json
   end
 end
 
@@ -113,6 +114,8 @@ get '/' do
   if response.status == 200
     @tests = JSON.parse(response.body)
     erb :index
+  elsif response.status == 404
+    'No momento, não há exames em nossa base de dados.'
   else
     erb '<h5>Não foi possível conectar-se com a base de dados</h5>'
   end

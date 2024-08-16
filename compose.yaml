@@ -1,5 +1,5 @@
 services:
-  app:
+  app: &app_base
     image: ruby
     container_name: myapp
     volumes:
@@ -9,7 +9,23 @@ services:
       - 3000:3000
     depends_on:
       - db_dev
+      - redis
     command: bash -c "bundle install && ruby db/start_database.rb && ruby app/server.rb"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+
+  sidekiq:
+    <<: *app_base
+    container_name: sidekiq
+    ports: []
+    depends_on:
+      - redis
+    command: bash -c "bundle install && sidekiq -r ./app/jobs/import_csv_job.rb"
+
+  redis:
+    container_name: redis
+    image: redis
+
   db_dev:
     image: postgres
     container_name: development_db
@@ -19,6 +35,7 @@ services:
       - POSTGRES_DB=devdb
     volumes:
       - relabs_data_dev:/var/lib/postgresql/data
+
   test:
     image: ruby
     container_name: myapp_test
@@ -28,6 +45,7 @@ services:
     depends_on:
       - db_test
     command: bash -c "bundle install && rspec && rubocop"
+
   db_test:
     image: postgres
     container_name: test_db
@@ -35,8 +53,6 @@ services:
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_USER=myuser
       - POSTGRES_DB=testdb
-    volumes:
-      - relabs_data_test:/var/lib/postgresql/data
+
 volumes:
   relabs_data_dev:
-  relabs_data_test:

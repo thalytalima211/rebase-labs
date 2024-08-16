@@ -29,6 +29,7 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     mini_portile2 (2.8.7)
+    multipart-post (2.4.1)
     mustermann (3.0.1)
       ruby2_keywords (~> 0.0.1)
     net-http (0.4.1)
@@ -116,7 +117,8 @@ PLATFORMS
 DEPENDENCIES
   capybara
   csv
-  faraday
+  faraday (~> 2.0)
+  multipart-post
   pg
   puma
   rack-test

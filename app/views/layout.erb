@@ -33,6 +33,16 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div class="row justify-content-center mb-4">
+            <span class="col-9">
+              Utilize o modelo ao lado para preencher os novos dados a serem adicionados de acordo com os dados necessários para um exame
+            </span>
+            <div class="col-2">
+              <a href="/csv_model.csv" class="btn btn-primary" download="csv_model.csv" type="text/csv">
+                Download
+              </a>
+            </div>
+          </div>
           <form action="/import_csv" method="POST" enctype="multipart/form-data">
             <div class="row align-items-center">
               <label class="form-label col-2" for="file">Arquivo CSV</label>

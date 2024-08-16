@@ -43,11 +43,10 @@ RSpec.describe 'User visit homepage' do
   end
 
   it 'and get an alert if there is no tests' do
-    fake_response = double('faraday_response', status: 200, body: '[]')
+    fake_response = double('faraday_response', status: 404, body: '[]')
     allow(Faraday).to receive(:get).with('http://localhost:3000/api/tests').and_return(fake_response)
 
     visit '/'
-
     expect(page).to have_content 'No momento, não há exames em nossa base de dados.'
   end
 
