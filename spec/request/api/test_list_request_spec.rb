@@ -51,4 +51,14 @@ RSpec.describe 'GET /tests' do
     expect(data[2]['cpf']).to eq '066.126.400-90'
     expect(data[2]['name']).to eq 'Matheus Barroso'
   end
+
+  it 'and can\'t find any test' do
+    allow(CSV).to receive(:read).with('/app/public/data.csv', col_sep: ';').and_return([])
+
+    get '/api/tests'
+
+    expect(last_response.status).to eq 404
+    data = JSON.parse last_response.body
+    expect(data).to eq []
+  end
 end

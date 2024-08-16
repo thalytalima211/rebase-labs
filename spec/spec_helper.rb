@@ -19,6 +19,8 @@ require 'rack/test'
 require 'capybara/rspec'
 require 'sinatra'
 require 'faraday'
+require 'simplecov'
+SimpleCov.start
 ENV['RACK_ENV'] = 'test'
 
 module RSpecMixin
