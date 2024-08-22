@@ -41,6 +41,136 @@ Após esses passos, a aplicação já deve estar disponível em:
 http://localhost:3000/
 ```
 
+## API
+A aplicação disponibiliza uma API que faz a conexão com os dados do banco.
+
+### Endpoints
+- `GET /read_database` - Este endpoint retorna um JSON que demonstra a estrutura real de colunas do banco de dados, para exemplificar a conexão do banco com a aplicação API
+
+Exemplo de resposta:
+```json
+[
+ {
+  "cpf": "048.973.170-88",
+  "name": "Emilly Batista Neto",
+  "email": "gerald.crona@ebert-quigley.com",
+  "birthday": "2001-03-11",
+  "address": "165 Rua Rafaela",
+  "city": "Ituverava",
+  "state": "Alagoas",
+  "doctor_crm": "B000BJ20J4",
+  "doctor_crm_state": "PI",
+  "doctor_name": "Maria Luiza Pires",
+  "doctor_email": "denna@wisozk.biz",
+  "result_token": "IQCZ17",
+  "result_date": "2021-08-05",
+  "test_type": "hemácias",
+  "test_type_limits": "45-52",
+  "test_type_result": "97"
+ },
+ {
+  "cpf": "048.973.170-88",
+  "name": "Emilly Batista Neto",
+  "email": "gerald.crona@ebert-quigley.com",
+  "birthday": "2001-03-11",
+  "address": "165 Rua Rafaela",
+  "city": "Ituverava",
+  "state": "Alagoas",
+  "doctor_crm": "B000BJ20J4",
+  "doctor_crm_state": "PI",
+  "doctor_name": "Maria Luiza Pires",
+  "doctor_email": "denna@wisozk.biz",
+  "result_token": "IQCZ17",
+  "result_date": "2021-08-05",
+  "test_type": "leucócitos",
+  "test_type_limits": "9-61",
+  "test_type_result": "89"
+ }
+]
+```
+
+- `GET /api/tests` - Esse endpoint retorna a listagem de todos os tokens de testes disponíveis no banco, com uma melhor organização e abstração do JSON para exibição das informações.
+
+Exemplo de resposta:
+```json
+[
+ {
+  "result_token": "00S0MD",
+  "result_date": "2022-03-03",
+  "cpf": "099.204.552-53",
+  "name": "Ladislau Duarte",
+  "email": "lisha@rosenbaum.org",
+  "birthday": "1981-02-02",
+  "address": "s/n Marginal Pietro",
+  "city": "Peritiba",
+  "state": "Rio Grande do Norte",
+  "doctor": {
+   "crm": "B000BJ8TIA",
+   "crm_state": "PR",
+   "name": "Ana Sophia Aparício Neto",
+   "email": "corene.hane@pagac.io"
+  }
+ },
+ {
+  "result_token": "06LD0G",
+  "result_date": "2021-05-15",
+  "cpf": "003.596.348-42",
+  "name": "Valentina Cruz",
+  "email": "cortez.dickens@farrell.name",
+  "birthday": "1979-04-04",
+  "address": "644 Ponte Ryan Esteves",
+  "city": "São José da Coroa Grande",
+  "state": "Rondônia",
+  "doctor": {
+   "crm": "B00067668W",
+   "crm_state": "RS",
+   "name": "Félix Garcês",
+   "email": "letty_greenfelder@herzog.name"
+  }
+ }
+]
+```
+
+- `GET /api/test/:token` - Exibe mais detalhes sobre um token de exame, incluindo todos os resultados dos testes desse exame.
+
+Exemplo de resposta:
+```json
+{
+ "result_token": "00S0MD",
+ "result_date": "2022-03-03",
+ "cpf": "099.204.552-53",
+ "name": "Ladislau Duarte",
+ "email": "lisha@rosenbaum.org",
+ "birthday": "1981-02-02",
+ "address": "s/n Marginal Pietro",
+ "city": "Peritiba",
+ "state": "Rio Grande do Norte",
+ "doctor": {
+  "crm": "B000BJ8TIA",
+  "crm_state": "PR",
+  "name": "Ana Sophia Aparício Neto",
+  "email": "corene.hane@pagac.io"
+ },
+ "tests": [
+  {
+   "type": "hemácias",
+   "limits": "45-52",
+   "result": "45"
+  },
+  {
+   "type": "leucócitos",
+   "limits": "9-61",
+   "result": "82"
+  },
+  {
+   "type": "plaquetas",
+   "limits": "11-93",
+   "result": "25"
+  }
+ ]
+}
+
+```
 ## Como rodar os testes
 Para executar somente o container de testes da aplicação, execute o comando abaixo, que também executa a verificação do Rubocop:
 ```
