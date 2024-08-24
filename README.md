@@ -33,7 +33,7 @@ docker compose up
 
 Se deseja importar dados iniciais para a aplicação, importe os dados do arquivo data.csv. rodando em outro terminal o comando:
 ```
-docker exec myapp ruby db/import_from_csv.rb
+docker exec api ruby db/import_from_csv.rb
 ```
 
 Após esses passos, a aplicação já deve estar disponível em:
@@ -42,7 +42,7 @@ http://localhost:3000/
 ```
 
 ## API
-A aplicação disponibiliza uma API que faz a conexão com os dados do banco.
+A aplicação disponibiliza uma API que faz a conexão com os dados do banco, no host `http://localhost:4000/`.
 
 ### Endpoints
 - `GET /read_database` - Este endpoint retorna um JSON que demonstra a estrutura real de colunas do banco de dados, para exemplificar a conexão do banco com a aplicação API
@@ -174,7 +174,8 @@ Exemplo de resposta:
 ## Como rodar os testes
 Para executar somente o container de testes da aplicação, execute o comando abaixo, que também executa a verificação do Rubocop:
 ```
-docker compose up test
+docker compose up test_api
+docker compose up test_web
 ```
 
 ## Como visualizar o dashboard dos Jobs
