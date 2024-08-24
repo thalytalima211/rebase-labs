@@ -1,27 +1,32 @@
 services:
-  app: &app_base
+  api:
     image: ruby
-    container_name: myapp
+    container_name: api
     volumes:
-      - .:/app
-    working_dir: /app
+      - ./api:/api
+    working_dir: /api
     ports:
-      - 3000:3000
-      - 9292:9292
+      - 4000:4000
     depends_on:
       - db_dev
-      - redis
-    command: bash -c "bundle install && ruby db/start_database.rb && ruby app/server.rb"
+    command: bash -c "bundle install --without test && ruby db/start_database.rb && ruby app/server.rb"
     environment:
       - REDIS_URL=redis://redis:6379/0
 
   sidekiq:
-    <<: *app_base
+    image: ruby
     container_name: sidekiq
-    ports: []
+    volumes:
+      - ./api:/api
+    working_dir: /api
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - 9292:9292
     depends_on:
+      - api
       - redis
-    command: bash -c "bundle install && sidekiq -r ./app/jobs/import_csv_job.rb"
+    command: bash -c "bundle install --without test && sidekiq -r ./app/jobs/import_csv_job.rb"
 
   redis:
     container_name: redis
@@ -37,12 +42,12 @@ services:
     volumes:
       - relabs_data_dev:/var/lib/postgresql/data
 
-  test:
+  test_api:
     image: ruby
-    container_name: myapp_test
+    container_name: test_api
     volumes:
-      - .:/app
-    working_dir: /app
+      - ./api:/api
+    working_dir: /api
     depends_on:
       - db_test
     command: bash -c "bundle install && rspec && rubocop"
@@ -54,6 +59,32 @@ services:
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_USER=myuser
       - POSTGRES_DB=testdb
+
+  web:
+    build: ./web
+    container_name: web
+    volumes:
+      - ./web:/web
+    ports:
+      - 3000:3000
+    depends_on:
+      - db_dev
+      - api
+    environment:
+      - BROWSER_PATH=/usr/bin/google-chrome
+    command: bash -c "bundle install --without test && ruby app/server.rb"
+
+  test_web:
+    build: ./web
+    container_name: test_web
+    volumes:
+      - ./web:/web
+    depends_on:
+      - db_test
+      - test_api
+    environment:
+      - BROWSER_PATH=/usr/bin/google-chrome
+    command: bash -c "bundle install && bundle exec rspec && rubocop"
 
 volumes:
   relabs_data_dev:
